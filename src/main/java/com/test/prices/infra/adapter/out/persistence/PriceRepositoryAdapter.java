@@ -1,7 +1,7 @@
 package com.test.prices.infra.adapter.out.persistence;
 
 import com.test.prices.domain.model.Price;
-import com.test.prices.domain.port.PriceRepository;
+import com.test.prices.application.port.PriceRepository;
 import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
@@ -22,12 +22,13 @@ public class PriceRepositoryAdapter implements PriceRepository {
             Long productId,
             LocalDateTime applicationDate
     ) {
-        return repository.findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
-                brandId,
-                productId,
-                applicationDate,
-                applicationDate
-        ).map(this::toDomain);
+        return repository
+                .findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+                    brandId,
+                    productId,
+                    applicationDate,
+                    applicationDate)
+                .map(this::toDomain);
     }
 
     private Price toDomain(PriceEntity entity) {

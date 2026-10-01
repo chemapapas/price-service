@@ -1,7 +1,8 @@
 package com.test.prices.infra.config;
 
-import com.test.prices.application.GetApplicablePriceUseCase;
-import com.test.prices.domain.port.PriceRepository;
+import com.test.prices.application.GetApplicablePriceService;
+import com.test.prices.application.port.PriceRepository;
+import com.test.prices.application.port.in.GetApplicablePriceUseCase;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -12,6 +13,6 @@ public class ApplicationConfig {
     public GetApplicablePriceUseCase getApplicablePriceUseCase(
             PriceRepository priceRepository
     ) {
-        return new GetApplicablePriceUseCase(priceRepository);
+        return new GetApplicablePriceService(priceRepository);
     }
 }

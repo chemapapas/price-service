@@ -4,13 +4,22 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Index;
 import jakarta.persistence.Table;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "PRICES")
+@Table(
+        name = "PRICES",
+        indexes = {
+                @Index(
+                        name = "idx_prices_brand_product",
+                        columnList = "brand_id, product_id"
+                )
+        }
+)
 public class PriceEntity {
 
     @Id

@@ -30,7 +30,9 @@ class PriceControllerIntegrationTest {
                 .andExpect(jsonPath("$.brandId").value(1))
                 .andExpect(jsonPath("$.priceList").value(1))
                 .andExpect(jsonPath("$.price").value(35.50))
-                .andExpect(jsonPath("$.currency").value("EUR"));
+                .andExpect(jsonPath("$.currency").value("EUR"))
+                .andExpect(jsonPath("$.startDate").value("2020-06-14T00:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-12-31T23:59:59"));
     }
 
     @Test
@@ -47,6 +49,8 @@ class PriceControllerIntegrationTest {
                 .andExpect(jsonPath("$.price").value(25.45))
                 .andExpect(jsonPath("$.currency").value("EUR"))
                 .andExpect(jsonPath("$.startDate").value("2020-06-14T15:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-06-14T18:30:00"))
+                .andExpect(jsonPath("$.startDate").value("2020-06-14T15:00:00"))
                 .andExpect(jsonPath("$.endDate").value("2020-06-14T18:30:00"));
     }
 
@@ -62,7 +66,9 @@ class PriceControllerIntegrationTest {
                 .andExpect(jsonPath("$.brandId").value(1))
                 .andExpect(jsonPath("$.priceList").value(1))
                 .andExpect(jsonPath("$.price").value(35.50))
-                .andExpect(jsonPath("$.currency").value("EUR"));
+                .andExpect(jsonPath("$.currency").value("EUR"))
+                .andExpect(jsonPath("$.startDate").value("2020-06-14T00:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-12-31T23:59:59"));
     }
 
     @Test
@@ -77,7 +83,9 @@ class PriceControllerIntegrationTest {
                 .andExpect(jsonPath("$.brandId").value(1))
                 .andExpect(jsonPath("$.priceList").value(3))
                 .andExpect(jsonPath("$.price").value(30.50))
-                .andExpect(jsonPath("$.currency").value("EUR"));
+                .andExpect(jsonPath("$.currency").value("EUR"))
+                .andExpect(jsonPath("$.startDate").value("2020-06-15T00:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-06-15T11:00:00"));
     }
 
     @Test
@@ -92,6 +100,38 @@ class PriceControllerIntegrationTest {
                 .andExpect(jsonPath("$.brandId").value(1))
                 .andExpect(jsonPath("$.priceList").value(4))
                 .andExpect(jsonPath("$.price").value(38.95))
-                .andExpect(jsonPath("$.currency").value("EUR"));
+                .andExpect(jsonPath("$.currency").value("EUR"))
+                .andExpect(jsonPath("$.startDate").value("2020-06-15T16:00:00"))
+                .andExpect(jsonPath("$.endDate").value("2020-12-31T23:59:59"));
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenBrandIdIsNotPositive() throws Exception {
+        mockMvc.perform(get("/api/prices")
+                        .param("brandId", "0")
+                        .param("productId", "35455")
+                        .param("applicationDate", "2020-06-14T10:00:00")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldReturnBadRequestWhenProductIdIsNotPositive() throws Exception {
+        mockMvc.perform(get("/api/prices")
+                        .param("brandId", "1")
+                        .param("productId", "0")
+                        .param("applicationDate", "2020-06-14T10:00:00")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void shouldReturnNotFoundWhenNoApplicablePriceExists() throws Exception {
+        mockMvc.perform(get("/api/prices")
+                        .param("brandId", "1")
+                        .param("productId", "35455")
+                        .param("applicationDate", "2021-01-01T10:00:00")
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 }

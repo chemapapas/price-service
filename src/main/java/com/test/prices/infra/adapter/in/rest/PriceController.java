@@ -1,9 +1,11 @@
 package com.test.prices.infra.adapter.in.rest;
 
-import com.test.prices.application.GetApplicablePriceUseCase;
+import com.test.prices.application.port.in.GetApplicablePriceUseCase;
 import com.test.prices.domain.model.Price;
+import jakarta.validation.constraints.Positive;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
+@Validated
 @RestController
 @RequestMapping("/api/prices")
 public class PriceController {
@@ -23,9 +26,10 @@ public class PriceController {
 
     @GetMapping
     public ResponseEntity<PriceResponse> getApplicablePrice(
-            @RequestParam Long brandId,
-            @RequestParam Long productId,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
+            @RequestParam(name = "brandId") @Positive Long brandId,
+            @RequestParam(name = "productId") @Positive Long productId,
+            @RequestParam(name = "applicationDate")
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME)
             LocalDateTime applicationDate
     ) {
         return getApplicablePriceUseCase

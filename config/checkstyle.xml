@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+
+<!DOCTYPE module PUBLIC
+        "-//Checkstyle//DTD Checkstyle Configuration 1.3//EN"
+        "https://checkstyle.org/dtds/configuration_1_3.dtd">
+
+<module name="Checker">
+
+    <property name="charset" value="UTF-8"/>
+
+    <module name="LineLength">
+        <property name="max" value="120"/>
+        <property name="ignorePattern" value="^package.*|^import.*"/>
+    </module>
+
+    <module name="FileTabCharacter"/>
+
+    <module name="TreeWalker">
+
+        <module name="AvoidStarImport"/>
+
+        <module name="RedundantImport"/>
+
+        <module name="UnusedImports"/>
+
+        <module name="NeedBraces"/>
+
+        <module name="EmptyBlock"/>
+
+        <module name="FinalLocalVariable"/>
+
+        <module name="MethodName"/>
+
+        <module name="LocalVariableName"/>
+
+        <module name="MemberName"/>
+
+        <module name="ParameterName"/>
+
+        <module name="TypeName"/>
+
+        <module name="ConstantName"/>
+
+        <module name="VisibilityModifier">
+            <property name="packageAllowed" value="false"/>
+            <property name="protectedAllowed" value="true"/>
+        </module>
+
+        <module name="EqualsHashCode"/>
+
+        <module name="FallThrough"/>
+
+        <module name="IllegalCatch"/>
+
+        <module name="IllegalThrows"/>
+
+        <module name="MultipleVariableDeclarations"/>
+
+        <module name="SimplifyBooleanExpression"/>
+
+        <module name="SimplifyBooleanReturn"/>
+
+        <module name="StringLiteralEquality"/>
+
+    </module>
+
+</module>

@@ -7,7 +7,8 @@ import java.util.Optional;
 
 public interface SpringDataPriceRepository extends JpaRepository<PriceEntity, Long> {
 
-    Optional<PriceEntity> findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
+    Optional<PriceEntity>
+    findFirstByBrandIdAndProductIdAndStartDateLessThanEqualAndEndDateGreaterThanEqualOrderByPriorityDesc(
             Long brandId,
             Long productId,
             LocalDateTime startDate,
